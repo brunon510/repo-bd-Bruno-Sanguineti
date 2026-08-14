@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Dinamica SQL</title>
+    <link rel="icon" type="image/x-icon" href="img/icono.ico">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <h1>Contenido principal</h1>
+
+    <script>
+      // Cargar archivo header.html
+      fetch('hotbar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('header-container').innerHTML = data;
+        });
+    </script>
+</body>
+</html>
+<include>
