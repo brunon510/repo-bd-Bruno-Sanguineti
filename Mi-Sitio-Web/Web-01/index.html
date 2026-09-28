@@ -1,23 +1,336 @@
 <!DOCTYPE html>
-<html lang="en">
-    
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Dinamica SQL</title>
+    <title>La Dinámica SQL - Guía Completa</title>
     <link rel="icon" type="image/x-icon" href="img/icono.ico">
+    <link rel="stylesheet" href="css/hot.css">
+    <style>
+        /* Estilos para el resaltado de sintaxis */
+        .sql-keyword { color: rgb(11, 166, 204); font-weight: bold; }
+        .sql-string { color: rgb(46, 125, 50); font-weight: bold; }
+        .sql-number { color: rgb(204, 198, 11); font-weight: bold; }
+    </style>
 </head>
 <body>
-    <div id="header-container"></div>
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="img/icono.ico" alt="La Dinámica SQL Logo" class="logo-img">
+                <span class="logo-text">La Dinámica SQL</span>
+            </a>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar modo oscuro">
+            <span class="theme-icon">🌙</span>
+        </button>
+    </nav>
 
-    <h1>Contenido principal</h1>
+    <!-- CONTENEDOR PRINCIPAL -->
+    <div class="page-container">
+
+        <!-- ÍNDICE LATERAL -->
+        <aside class="sidebar">
+            <nav class="index-menu">
+                <h3>Índice de contenido</h3>
+                <ul>
+                    <li><a href="#inicio">1. Inicio / SQL</a></li>
+                    <li><a href="#Creación de una tabla">2. Creación de una tabla</a></li>
+                    <li><a href="#Inserción de datos">3. Inserción de datos</a></li>
+                    <li><a href="#Eliminación de datos">4. Eliminación de datos</a></li>
+                    <li><a href="#Actualización de datos">5. Actualización de datos</a></li>
+                    <li><a href="#Actualización de columnas en una tabla">6. Actualización de columnas en una tabla</a></li>
+                    <li><a href="#Eliminación de una tabla">7. Eliminación de una tabla</a></li>
+                    <li><a href="#Quitar datos de la tabla">8. Quitar datos de la tabla</a></li>
+                    <li><a href="#Eliminación de una base de datos">9.Eliminación de una base de datos</a></li>
+                    <li><a href="#Consultas en una tabla">10. Consultas en una tabla (UPDATE)</a></li>
+                    <li><a href="#Filtrado de resultados">11. Filtrado de resultados (ALTER)</a></li>
+                    <li><a href="#Ordenamiento de resultados">12. Ordenamiento de resultados (DROP)</a></li>
+                    <li><a href="#Agrupamiento de resultados">13. Agrupamiento de resultados (TRUNCATE)</a></li>
+                    <li><a href="#Funciones de agregación">14. Funciones de agregación</a></li>
+                    <li><a href="#Consultas entre tablas">15. Consultas entre tablas</a></li>
+                    <li><a href="#Joins (Uniones)">16. Joins (Uniones)</a></li>
+                    <li><a href="#¿Cómo diferenciamos el uso de WHERE y JOIN?">17. ¿Cómo diferenciamos el uso de WHERE y JOIN?</a></li>
+                    <li><a href="#Subconsultas">18. Subconsultas</a></li>
+                    <li><a href="#Consultas avanzadas">19. Consultas avanzadas</a></li>
+                    <li><a href="#Primary Keys y Foreign Keys">20. Primary Keys y Foreign Keys (JOINS)</a></li>
+                    <li><a href="#Primary Keys (Claves Primarias)">21. Primary Keys (Claves Primarias)</a></li>
+                    <li><a href="#Foreign Keys (Claves Foráneas)">22. Foreign Keys (Claves Foráneas)</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="content-right">
+
+            <section id="inicio">
+                <h1>SQL</h1>
+                <h2>Manipulación de tablas y bases de datos</h2>
+                <p>Para crear una base de datos en SQL, se utiliza la instrucción <code>CREATE DATABASE</code>.</p>
+                <p><strong>Por ejemplo:</strong></p>
+                <pre><code><span class="sql-keyword">CREATE DATABASE</span> mi_base_de_datos;</code></pre>
+                <p>Esta consulta crea una nueva base de datos llamada <strong>mi_base_de_datos</strong>. Una vez</p>
+                <p>creada, se puede utilizar para crear tablas y almacenar datos.</p>
+            </section>
+
+            <section id="Creación de una tabla">
+                <h2>Creación de una tabla</h2>
+                <p>Para crear una tabla dentro de una base de datos, se utiliza la instrucción <code>CREATE TABLE</code>.</p>
+                <p>Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">CREATE TABLE</span> empleados (
+id <span class="sql-keyword">INT PRIMARY KEY</span>,
+nombre <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>),
+departamento <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>),
+salario <span class="sql-keyword">DECIMAL</span>(<span class="sql-number">10, 2</span>)
+);</code></pre>
+                <p>Esta consulta crea una tabla llamada empleados con cuatro columnas: <code>id</code>, <code>nombre</code>, <code>departamento</code> y <code>salario</code>. La columna <code>id</code> es de tipo entero <code>(INT)</code> y se define como la clave primaria <code>(PRIMARY KEY)</code>, lo que significa que debe ser única para cada registro.</p>
+                <p>Las columnas <code>nombre</code> y <code>departamento</code> son de tipo cadena de caracteres variable <code>(VARCHAR)</code> con un máximo de 50 caracteres, y la columna <code>salario</code> es de tipo decimal con dos decimales.</p>
+            </section>
+
+            <section id="Inserción de datos">
+                <h2>Inserción de datos</h2>
+                <p>Para insertar datos en una tabla, se utiliza la instrucción <code>INSERT INTO</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">INSERT INTO</span> empleados (id, nombre, departamento, salario)
+<span class="sql-keyword">VALUES</span> (<span class="sql-number">1</span>, <span class="sql-string">'Juan Pérez'</span>, <span class="sql-string">'Recursos Humanos'</span>, <span class="sql-number">3000.00</span>);</code></pre>
+                <p>Esta consulta inserta un nuevo registro en la tabla empleados con los valores especificados para cada columna. Se pueden insertar múltiples registros utilizando varias sentencias <code>INSERT INTO</code> o una sola sentencia con múltiples valores. En el ejemplo de arriba solo se está agregando información de un empleado llamado "Juan Pérez".</p>
+                <p>Podríamos agregar muchos más empleados en un mismo bloque:</p>
+                <pre><code><span class="sql-keyword">INSERT INTO</span> empleados (id, nombre, departamento, salario)
+<span class="sql-keyword">VALUES</span>
+(<span class="sql-number">2</span>, <span class="sql-string">'Ana Gómez'</span>, <span class="sql-string">'Finanzas'</span>, <span class="sql-number">3500.00</span>),
+(<span class="sql-number">3</span>, <span class="sql-string">'Luis Martínez'</span>, <span class="sql-string">'IT'</span>, <span class="sql-number">4000.00</span>),
+(<span class="sql-number">4</span>, <span class="sql-string">'María López'</span>, <span class="sql-string">'Marketing'</span>, <span class="sql-number">3200.00</span>);</code></pre>
+                <p>Esto inserta tres registros en la tabla empleados de una sola vez, lo que es más eficiente que realizar múltiples sentencias <code>INSERT INTO</code> por separado.</p>
+            </section>
+
+            <section id="Eliminación de datos">
+                <h2>Eliminación de datos</h2>
+                <p>Para eliminar datos de una tabla, se utiliza la instrucción <code>DELETE FROM</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">DELETE FROM</span> empleados
+<span class="sql-keyword">WHERE</span> id = <span class="sql-number">1</span>;</code></pre>
+                <p>Esta consulta elimina el registro de la tabla empleados donde el <code>id</code> es igual a 1. Es importante tener cuidado al utilizar esta instrucción, ya que eliminará permanentemente los datos del registro especificado.</p>
+            </section>
+
+            <section id="Actualización de datos">
+                <h2>Actualización de datos</h2>
+                <p>Para actualizar datos en una tabla, se utiliza la instrucción <code>UPDATE</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">UPDATE</span> empleados
+<span class="sql-keyword">SET</span> salario = <span class="sql-number">3200.00</span>
+<span class="sql-keyword">WHERE</span> id = <span class="sql-number">2</span>;</code></pre>
+                <p>Esta consulta actualiza el salario del empleado con <code>id</code> igual a 2, estableciendo su nuevo salario en $3200.00. Al igual que con la instrucción <code>DELETE</code>, es importante especificar correctamente la condición en la cláusula <code>WHERE</code> para evitar actualizar registros incorrectos.</p>
+            </section>
+
+            <section id="Actualización de columnas en una tabla">
+                <h2>Actualización de columnas en una tabla</h2>
+                <p>Para actualizar la estructura de una tabla, como agregar o eliminar columnas, se utiliza la instrucción <code>ALTER TABLE</code>. Por ejemplo, para agregar una nueva columna llamada <code>fecha_contratacion</code> a la tabla empleados, se puede hacer lo siguiente:</p>
+                <pre><code><span class="sql-keyword">ALTER TABLE</span> empleados
+<span class="sql-keyword">ADD</span> fecha_contratacion <span class="sql-keyword">DATE</span>;</code></pre>
+                <p>Si luego se quisiera eliminar esta columna, se utilizaría:</p>
+                <pre><code><span class="sql-keyword">ALTER TABLE</span> empleados
+<span class="sql-keyword">DROP COLUMN</span> fecha_contratacion;</code></pre>
+            </section>
+
+            <section id="Eliminación de una tabla">
+                <h2>Eliminación de una tabla</h2>
+                <p>Para eliminar una tabla de una base de datos, se utiliza la instrucción <code>DROP TABLE</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">DROP TABLE</span> empleados;</code></pre>
+                <p>Esta consulta elimina la tabla empleados de la base de datos, junto con todos los datos que contiene, a menos que existan restricciones de foreign keys. Al igual que con la instrucción <code>DELETE</code>, es importante tener cuidado al utilizar <code>DROP TABLE</code>, ya que eliminará permanentemente la tabla y sus datos.</p>
+                <p>Si se sabe que la tabla tiene restricciones de foreign keys y se desea eliminarla junto con todas las referencias, se puede utilizar la opción <code>CASCADE</code>:</p>
+                <pre><code><span class="sql-keyword">DROP TABLE</span> empleados <span class="sql-keyword">CASCADE</span>;</code></pre>
+                <p>Esta consulta eliminará la tabla empleados y todas las referencias a ella en otras tablas, eliminando también los datos asociados.</p>
+            </section>
+
+            <section id="Quitar datos de la tabla">
+                <h2>Quitar datos de la tabla</h2>
+                <p>Para eliminar todos los datos de una tabla sin eliminar la tabla en sí, se utiliza la instrucción <code>TRUNCATE TABLE</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">TRUNCATE TABLE</span> empleados;</code></pre>
+                <p>Esta consulta elimina todos los registros de la tabla empleados, pero mantiene la estructura de la tabla intacta. Por lo tanto, la tabla seguirá existiendo y se podrá seguir utilizando para insertar nuevos datos.</p>
+            </section>
+
+            <section id="Eliminación de una base de datos">
+                <h2>Eliminación de una base de datos</h2>
+                <p>Para eliminar una base de datos completa, se utiliza la instrucción <code>DROP DATABASE</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">DROP DATABASE</span> mi_base_de_datos;</code></pre>
+                <p>Esta consulta elimina la base de datos mi_base_de_datos junto con todas las tablas y datos que contiene. Al igual que con las instrucciones <code>DELETE</code> y <code>DROP TABLE</code>, es importante tener cuidado al utilizar <code>DROP DATABASE</code>, ya que eliminará permanentemente la base de datos y todos sus contenidos.</p>
+            </section>
+
+            <section id="Consultas en una tabla">
+                <h2>Consultas en una tabla</h2>
+                <p>Ahora que ya se tiene un conjunto de tablas con datos insertados, se pueden realizar consultas para recuperar información específica. Las consultas se realizan utilizando la instrucción <code>SELECT</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados y muestra todas las columnas. El asterisco (*) indica que se deben seleccionar todas las columnas disponibles.</p>
+                <p>Para seleccionar columnas específicas, se pueden enumerar los nombres de las columnas en lugar de usar el asterisco. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> nombre, salario <span class="sql-keyword">FROM</span> empleados;</code></pre>
+                <p>Esta consulta selecciona solo las columnas nombre y salario de la tabla empleados, mostrando únicamente esos datos en el resultado.</p>
+            </section>
+
+            <section id="Filtrado de resultados">
+                <h2>Filtrado de resultados</h2>
+                <p>Para filtrar los resultados de una consulta, se utiliza la cláusula <code>WHERE</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">WHERE</span> departamento = <span class="sql-string">'IT'</span>;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados donde el departamento es igual a IT. La cláusula <code>WHERE</code> permite especificar condiciones para filtrar los resultados de la consulta.</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">WHERE</span> salario &gt; <span class="sql-number">3000.00</span>;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados donde el salario es mayor a 3000.00. Se pueden utilizar operadores de comparación como <code>=</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> y <code>&lt;&gt;</code> para establecer condiciones en la cláusula <code>WHERE</code>.</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">WHERE</span> nombre <span class="sql-keyword">LIKE</span> <span class="sql-string">'A%'</span>;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados donde el nombre comienza con la letra A. El operador <code>LIKE</code> se utiliza para realizar búsquedas basadas en patrones, y el símbolo % actúa como un comodín que representa cualquier secuencia de caracteres.</p>
+            </section>
+
+            <section id="Ordenamiento de resultados">
+                <h2>Ordenamiento de resultados</h2>
+                <p>Para ordenar los resultados de una consulta, se utiliza la cláusula <code>ORDER BY</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">ORDER BY</span> salario <span class="sql-keyword">DESC</span>;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados y los ordena por la columna salario en orden descendente (<code>DESC</code>). Es decir, que los empleados estará ordenados desde el de mejor salario al de peor salario. Si se desea ordenar en orden ascendente, se puede utilizar <code>ASC</code> o simplemente omitirlo, ya que es el comportamiento predeterminado.</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">ORDER BY</span> nombre <span class="sql-keyword">ASC</span>;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados y los ordena por la columna nombre en orden ascendente (<code>ASC</code>). En este caso los empleados estarán ordenados alfabéticamente por su nombre, desde la A hasta la Z.</p>
+                <pre><code><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">WHERE</span> departamento = <span class="sql-string">'Recursos Humanos'</span>
+<span class="sql-keyword">ORDER BY</span> fecha_contratacion <span class="sql-keyword">DESC</span>;</code></pre>
+                <p>Esta consulta selecciona todos los registros de la tabla empleados donde el departamento es igual a Recursos Humanos y los ordena por la columna fecha_contratacion en orden descendente (<code>DESC</code>). Esto permite ver solo a los empleados del departamento de Recursos Humanos y ordenarlos por la fecha en que fueron contratados, desde el más reciente al más antiguo.</p>
+            </section>
+
+            <section id="Agrupamiento de resultados">
+                <h2>Agrupamiento de resultados</h2>
+                <p>Para agrupar los resultados de una consulta, se utiliza la cláusula <code>GROUP BY</code>. Por ejemplo:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> departamento, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">AS</span> total_empleados
+<span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">GROUP BY</span> departamento;</code></pre>
+                <p>Esta consulta selecciona el departamento y el número total de empleados en cada departamento de la tabla empleados. La función <code>COUNT(*)</code> cuenta el número de registros en cada grupo definido por la cláusula <code>GROUP BY</code>. El resultado mostrará una lista de departamentos junto con el total de empleados en cada uno.</p>
+                <pre><code><span class="sql-keyword">SELECT</span> departamento, <span class="sql-keyword">AVG</span>(salario) <span class="sql-keyword">AS</span> salario_promedio
+<span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">GROUP BY</span> departamento;</code></pre>
+                <p>Esta consulta selecciona el departamento y el salario promedio de los empleados en cada departamento de la tabla empleados. La función <code>AVG(salario)</code> calcula el salario promedio para cada grupo definido por la cláusula <code>GROUP BY</code>. El resultado mostrará una lista de departamentos junto con el salario promedio de los empleados en cada uno.</p>
+            </section>
+
+            <section id="Funciones de agregación">
+                <h2>Funciones de agregación</h2>
+                <p>SQL proporciona varias funciones de agregación que se pueden utilizar para realizar cálculos en los datos. Algunas de las funciones más comunes son:</p>
+                <ul>
+                    <li><code>COUNT()</code>: Cuenta el número de registros en un grupo.</li>
+                    <li><code>SUM()</code>: Suma los valores de una columna en un grupo.</li>
+                    <li><code>AVG()</code>: Calcula el promedio de los valores de una columna en un grupo.</li>
+                    <li><code>MIN()</code>: Devuelve el valor mínimo de una columna en un grupo.</li>
+                    <li><code>MAX()</code>: Devuelve el valor máximo de una columna en un grupo.</li>
+                </ul>
+                <p>Por ejemplo, para contar el número total de empleados en la tabla empleados, se puede utilizar:</p>
+                <pre><code><span class="sql-keyword">SELECT COUNT</span>(*) <span class="sql-keyword">AS</span> total_empleados
+<span class="sql-keyword">FROM</span> empleados;</code></pre>
+                <p>Esta consulta cuenta el número total de registros en la tabla empleados y devuelve el resultado con el alias total_empleados.</p>
+            </section>
+
+            <section id="Consultas entre tablas">
+                <h2>Consultas entre tablas</h2>
+                <p>En SQL, es común trabajar con múltiples tablas y realizar consultas que involucren datos de varias de ellas. Esto se logra mediante el uso de joins (uniones) y subconsultas.</p>
+            </section>
+
+            <section id="Joins (Uniones)">
+                <h2>Joins (Uniones)</h2>
+                <p>Los joins permiten combinar registros de dos o más tablas basándose en una relación entre ellas. Existen varios tipos de joins, siendo el más común el INNER JOIN, que devuelve solo los registros que tienen coincidencias en ambas tablas.</p>
+                <p>Por ejemplo, si tenemos una tabla departamentos que contiene información sobre los departamentos de la empresa, y queremos obtener una lista de empleados junto con su departamento, podemos hacer lo siguiente:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> empleados.nombre, departamentos.nombre <span class="sql-keyword">AS</span> departamento
+<span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">INNER JOIN</span> departamentos <span class="sql-keyword">ON</span> empleados.departamento = departamentos.id;</code></pre>
+                <p>Esta consulta selecciona el nombre de los empleados y el nombre de su departamento, uniendo las tablas empleados y departamentos a través de la columna departamento en la tabla empleados y la columna id en la tabla departamentos. El resultado mostrará una lista de empleados junto con el nombre de su departamento.</p>
+
+                <h3>Otra manera de hacer este join es utilizando WHERE:</h3>
+                <pre><code><span class="sql-keyword">SELECT</span> empleados.nombre, departamentos.nombre <span class="sql-keyword">AS</span> departamento
+<span class="sql-keyword">FROM</span> empleados, departamentos
+<span class="sql-keyword">WHERE</span> empleados.departamento = departamentos.id;</code></pre>
+            </section>
+
+            <section id="¿Cómo diferenciamos el uso de WHERE y JOIN?">
+                <h2>¿Cómo diferenciamos el uso de WHERE y JOIN?</h2>
+                <p>En realidad, ambas formas son válidas y producen el mismo resultado. Sin embargo, el uso de JOIN es más explícito y legible, especialmente cuando se trabaja con múltiples tablas. Además, JOIN permite especificar diferentes tipos de uniones, como LEFT JOIN, RIGHT JOIN, y FULL JOIN, que tienen diferentes comportamientos en cuanto a los registros que se incluyen en el resultado.</p>
+            </section>
+
+            <section id="Subconsultas">
+                <h2>Subconsultas</h2>
+                <p>Las subconsultas son consultas anidadas dentro de otra consulta. Se utilizan para realizar operaciones más complejas o para filtrar resultados basados en el resultado de otra consulta.</p>
+                <p>Por ejemplo, si queremos obtener una lista de empleados cuyo salario es mayor que el salario promedio de todos los empleados, podemos hacer lo siguiente:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> nombre, salario
+<span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">WHERE</span> salario &gt; (<span class="sql-keyword">SELECT AVG</span>(salario) <span class="sql-keyword">FROM</span> empleados);</code></pre>
+                <p>Esta consulta selecciona el nombre y el salario de los empleados cuyo salario es mayor que el salario promedio de todos los empleados. La subconsulta (SELECT AVG(salario) FROM empleados) calcula el salario promedio, y luego la consulta principal filtra los empleados que cumplen con esa condición.</p>
+            </section>
+
+            <section id="Consultas avanzadas">
+                <h2>Consultas avanzadas</h2>
+                <p>Para realizar consultas más avanzadas, se pueden combinar múltiples joins y subconsultas. Por ejemplo, si queremos obtener una lista de empleados junto con su departamento y el salario promedio de su departamento, podemos hacer lo siguiente:</p>
+                <pre><code><span class="sql-keyword">SELECT</span> empleados.nombre, departamentos.nombre <span class="sql-keyword">AS</span> departamento, <span class="sql-keyword">AVG</span>(empleados.salario) <span class="sql-keyword">AS</span> salario_promedio
+<span class="sql-keyword">FROM</span> empleados
+<span class="sql-keyword">INNER JOIN</span> departamentos <span class="sql-keyword">ON</span> empleados.departamento = departamentos.id
+<span class="sql-keyword">GROUP BY</span> empleados.nombre, departamentos.nombre;</code></pre>
+                <p>Esta consulta selecciona el nombre de los empleados, el nombre de su departamento y el salario promedio de los empleados en ese departamento. Utiliza un INNER JOIN para combinar las tablas empleados y departamentos, y luego agrupa los resultados por el nombre del empleado y el nombre del departamento para calcular el salario promedio.</p>
+            </section>
+
+            <section id="Primary Keys y Foreign Keys">
+                <h2>Primary Keys y Foreign Keys</h2>
+                <p>En SQL, las primary keys (claves primarias) y foreign keys (claves foráneas) son conceptos fundamentales para establecer relaciones entre tablas y garantizar la integridad de los datos.</p>
+            </section>
+
+            <section id="Primary Keys (Claves Primarias)">
+                <h2>Primary Keys (Claves Primarias)</h2>
+                <p>Una primary key es una columna o conjunto de columnas que identifica de manera única cada fila en una tabla. No puede contener valores nulos y debe ser única para cada registro. Se utiliza para garantizar que no haya duplicados en la tabla y para establecer relaciones con otras tablas.</p>
+                <p>Por ejemplo, en la tabla empleados, la columna id podría ser definida como la clave primaria:</p>
+                <pre><code><span class="sql-keyword">CREATE TABLE</span> empleados (
+    id <span class="sql-keyword">SERIAL PRIMARY KEY</span>,
+    nombre <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>),
+    departamento <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>),
+    salario <span class="sql-keyword">DECIMAL</span>(<span class="sql-number">10, 2</span>)
+);</code></pre>
+                <p>En este caso, la columna id es de tipo SERIAL, lo que significa que se generará automáticamente un valor único para cada nuevo registro insertado en la tabla. Esto asegura que cada empleado tenga un identificador único, y por lo tanto, dos empleados distintos no podrán tener el mismo id.</p>
+            </section>
+
+            <section id="Foreign Keys (Claves Foráneas)">
+                <h2>Foreign Keys (Claves Foráneas)</h2>
+                <p>Una foreign key es una columna o conjunto de columnas en una tabla que hace referencia a la primary key de otra tabla. Se utiliza para establecer y reforzar la relación entre las dos tablas. Las claves foráneas permiten la comunicación entre tablas, asegurando que los valores en la columna de la clave foránea coincidan con los valores en la columna de la clave primaria de la tabla referenciada. Es decir, que de alguna manera una clave foránea en una tabla apunta a una clave primaria en otra tabla.</p>
+                <p>Por ejemplo, si tenemos una tabla departamentos y queremos establecer una relación entre los empleados y sus departamentos, podemos definir la columna departamento en la tabla empleados como una clave foránea que hace referencia a la columna id en la tabla departamentos:</p>
+                <pre><code><span class="sql-keyword">CREATE TABLE</span> departamentos (
+    id <span class="sql-keyword">SERIAL PRIMARY KEY</span>,
+    nombre <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>)
+);
+
+<span class="sql-keyword">CREATE TABLE</span> empleados (
+    id <span class="sql-keyword">SERIAL PRIMARY KEY</span>,
+    nombre <span class="sql-keyword">VARCHAR</span>(<span class="sql-number">50</span>),
+    depto_id <span class="sql-keyword">INT</span>,
+    salario <span class="sql-keyword">DECIMAL</span>(<span class="sql-number">10, 2</span>),
+    <span class="sql-keyword">FOREIGN KEY</span> (depto_id) <span class="sql-keyword">REFERENCES</span> departamentos(id)
+);</code></pre>
+                <p>En este caso, la columna depto_id en la tabla empleados es una clave foránea que hace referencia a la columna id en la tabla departamentos. Esto significa que cada empleado debe pertenecer a un departamento existente, y no se permitirá insertar un registro en la tabla empleados con un valor de depto_id que no exista en la tabla departamentos.</p>
+                <p>A su vez, la generación de esta foreign key garantiza que la tabla de empleados pueda relacionarse de forma directa con la tabla de departamentos, permitiendo realizar consultas que combinen datos de ambas tablas de manera efectiva.</p>
+            </section>
+
+        </main>
+    </div>
 
     <script>
-      // Cargar archivo header.html
-      fetch('hotbar.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('header-container').innerHTML = data;
+        // Obtener el botón de modo oscuro
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        
+        // Verificar si hay una preferencia guardada
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.textContent = '☀️';
+        }
+        
+        // Alternar modo oscuro
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
         });
     </script>
 </body>
